@@ -1,0 +1,65 @@
+/* style information for the contact form */
+
+#mailform_container {
+    margin-top: 2em;
+}
+
+.mailform_item {
+    margin-bottom: .5em;
+}
+
+.mailform_item_label {
+    float: left;
+    width: 20%;
+    text-align: right;
+    padding-right: 1em;
+}
+
+.mailform_item_input > input, .mailform_item_input > textarea {
+    width: 75%;
+}
+
+.mailform_item_input > textarea {
+    height: 10em;
+}
+
+#mailform_submit {
+    text-align: center;
+}
+
+#error {
+    padding: 10px 10px 10px 10px;
+
+    border: 3px;
+    border-style: solid;
+    border-color: #53DF00;
+
+    background-color: #FFBBBB;
+}
+
+#error-title {
+    font-size: 16px;
+    color: #FF0000;
+    padding-bottom: 15px;
+}
+
+#error-text {
+    font-size: 14px;
+    color: #555555;
+    padding-left: 30px;
+}
+
+#submit_button {
+    background-color: #9FEE00;
+    border: 2px solid;
+    border-color: #53DF00;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#email_sent_confirmation {
+    margin-top: 30px;
+    font-size: 16px;
+    width: 100%;
+    align: center;
+}

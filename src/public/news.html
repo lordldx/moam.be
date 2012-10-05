@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>Nieuws</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/site.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/news.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jquerytools.org/1.2.5/jquery.tools.min.js"></script>
+    <script type="text/javascript" src="js/tooltip.js"></script>
+    <script type="text/javascript">
+      if (typeof jQuery == 'undefined') {
+      var e = document.createElement('script');
+      e.src = '/js/jquery.js';
+      e.type = 'text/javascript';
+      document.getElementsByTagName('head')[0].appendChild(e);
+      } 
+    </script>
+  </head>
+  <body>
+    <div id="main">
+      <div id="news-header">
+        <a href="http://www.moam.be">
+          <img src="images/header.png" alt="moambe logo" />
+        </a>
+      </div>
+      <div id="news-contents">
+        <h1 id="news-title">Nieuws</h1>
+        <ul id="news-list">
+          <li class="news-item dropshadow">
+            <div class="news-item-header">
+              <h2 class="news-item-title">Lancering</h2>
+              <div class="news-item-timestamp">Zaterdag 1 oktober 2011</div>
+            </div>
+            <div class="news-item-contents">
+              Vandaag is de grote dag!
+              Vandaag wordt moam.be gelanceerd!
+            </div>
+          </li>
+          <li class="news-item dropshadow">
+            <div class="news-item-header">
+              <h2 class="news-item-title">Eerste bericht</h2>
+              <div class="news-item-timestamp">Maandag 29 augustus 2011</div>
+            </div>
+            <div class="news-item-contents">
+              tadaaaaaaaa: het eerst nieuwsbericht!
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="ToolTip">
+      <div id="ToolTipMain">
+      </div>
+      <div id="ToolTipArrow">
+      </div>
+    </div>
+    <form method="post" action="/search" id="searchform">
+      <input id="mainsearch" type="hidden" name="mainsearch">
+    </form>
+  </body>
+</html>

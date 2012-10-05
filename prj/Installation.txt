@@ -1,0 +1,63 @@
+0. Get foood
+------------
+<<TODO>> (bitbucket?)
+and install it to /opt/foood
+
+1. CouchDB
+----------
+ - install: apt-get install couchdb
+ - configure: <<TODO>>
+ - run: /etc/rc2.d/couchdb start
+ - initialize:
+    - create db: curl -XPUT http://localhost:5984/foood
+
+2. ElasticSearch
+----------------
+ - install:
+   - download: curl https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-0.17.4.tar.gz
+   - extract: tar -xvzf elasticsearch-0.17.4.tar.gz
+ - configure: <<TODO>>
+ - install river-couchdb plugin: ./elasticsearch-0.17.4/bin/plugin install river-couchdb
+ - run: ./elasticsearch-0.17.4/bin/elasticsearch
+ - initialize:
+    - link to couchdb: curl -XPUT http://localhost:9200/_river/foood/_meta -d@/opt/foood/setup/river.json
+
+3. Perl
+-------
+ - install: apt-get install perl
+ - initialize:
+    - install necessary modules:
+       cpan install Mojolicious
+       cpan install MooseX::Declare
+       cpan install Data::Compare
+       cpan install ElasticSearch
+       cpan install CouchDB::Client
+       cpan install MooseX::Getopt
+       cpan install Config::YAML
+       cpan install Mojolicious::Plugin::Mail
+       cpan install GD
+       cpan install Email::Valid
+       cpan install Captcha::reCAPTCHA
+       cpan install MooseX::Types::URI
+       ... <<TODO>>   
+
+4. Crawlers
+-----------
+ - initial run: perl -I/opt/foood/src/lib /opt/foood/src/app/crawler/crawler.pl
+ - cronjob for updates: 
+    crontab -e
+    -> add following line to crontab: 0 2 * * * perl -I/opt/food/src/lib /opt/foood/src/app/crawler/crawler.pl -u
+
+5. Apache
+---------
+ - install:
+    apt-get install apache
+    apt-get install mod_perl
+ - configure:
+    - add foood config to httpd.conf: 
+       Include /opt/foood/setup/foood-apache.conf
+ - run: /etc/rc2.d/apachectl start
+
+6. Test
+-------
+ - You're done! surf to your site and try to search for some recipes!!! =)

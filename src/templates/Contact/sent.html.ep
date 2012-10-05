@@ -1,0 +1,19 @@
+% layout 'default';
+%= javascript 'js/contact/index.js'
+%= stylesheet 'css/contact.css'
+<script type="text/javascript">
+  var index = new Index();
+  $('document').ready(function(){index.ready();});
+</script>
+<div id="header">
+  <a href="http://www.moam.be">
+    <img src="images/header.png" alt="moambe logo" />
+  </a>
+</div>
+<div id="content" class="recipe dropshadow">
+  <h1 class="recipe-title">Bedankt!</h1>
+  <div id="email_sent_confirmation">
+    <p>Je e-mail werd goed verzonden! We proberen deze zo snel mogelijk te beantwoorden!</p>
+    <p><a href="/">Klik hier om terug te keren naar de hoofdpagina.</a></p>
+  </div>
+</div>

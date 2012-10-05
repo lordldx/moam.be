@@ -1,0 +1,26 @@
+{
+    "_id" : "_design/views",
+    "views" : 
+    {
+        "no_ingredients" : 
+        {
+            "map" : "function (doc) {if (doc.ingredients.length <= 0) {emit(doc._id, doc.url);}}"
+        },
+        "no_difficulty" : 
+        {
+            "map" : "function (doc) {if (doc.difficulty == '') {emit(doc._id, doc.url);}}"
+        },
+        "no_content" : 
+        {
+            "map" : "function (doc) {if (doc.content == '') {emit(doc._id, doc.url);}}"
+        },
+        "no_chef" : 
+        {
+            "map" : "function (doc) {if (doc.chef == '') {emit(doc._id, doc.url);}}"
+        },
+        "no_title" : 
+        {
+            "map" : "function (doc) {if (doc.title == '') {emit(doc._id, doc.url);}}"
+        }
+    }
+}

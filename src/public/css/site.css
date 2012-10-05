@@ -1,0 +1,294 @@
+/* site-wide settings */
+body
+{
+    /* font */
+    font-family: arial, helvetica, sans-serif;
+    font-size: 18px;
+}
+
+/* main divs */
+#main
+{
+    margin: 0 auto;
+    width: 800px;
+    text-align: center;
+}
+
+#header
+{
+    margin-top: 150px;
+}
+
+#about-header
+{
+    margin-top: 50px;
+}
+
+#mainsearch
+{
+    width: 375px;
+    margin-top: 50px;
+    height: 25px;
+    border-color: #53DF00;
+    border-style: solid;
+    border-width: 1px;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 18px;
+}
+
+/* general classes */
+.dropshadow {  
+    -moz-box-shadow: 0px 0px 2px #000; /* older Firefox/Mozilla */  
+    -webkit-box-shadow: 0px 0px 2px #000; /*Safari/Chrome */  
+    box-shadow: 0px 0px 2px #000; /* css3 compliant browsers */  
+    /* Voor IE 8 */  
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Color='#000000')";  
+    /* Voor IE 5.5 - 7 */  
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Color='#000000');  
+}  
+
+.text-align-left {
+    text-align: left;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.clickable {
+    text-decoration: underline;
+    color: #555555;
+    cursor: pointer;
+}
+
+input.searchinput {
+    background-image: url('../images/search.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    padding: 0px 30px 0px 5px;
+}
+
+/* searchresults */
+#logo_small {
+}
+
+#header-searchresults {
+    margin-top: 20px;
+    text-align: left;
+}
+
+#header-left {
+    float: left;
+    margin-right: 20px;
+}
+
+#header-right {
+    margin-left: 100px;
+    padding-top: 22px;
+}
+
+#header-right-info {
+    font-size: 12px;
+    color: #666666;
+    padding-top: 14px; /* makes sure that bottom of text is level with bottom of logo */
+}
+
+#resultinfo {
+    text-align: left;
+}
+
+#noresults {
+    margin-top: 100px;
+    padding: 10px 0px 10px 0px;
+
+    border: 3px;
+    border-style: solid;
+    border-color: #53DF00;
+
+    background-color: #FFAAAA;
+}
+
+#noresults-title {
+    color: #111111;
+    padding-bottom: 15px;
+}
+
+#noresults-text {
+    font-size: 14px;
+    color: #555555;
+}
+
+#noresults-text > ul {
+    margin: 0px 0px 0px 175px;
+    text-align: left;
+}
+
+.searchresults {
+    padding-bottom: 10px;
+    padding-left: 0px;
+
+    border-width: 0px 0px 3px 0px;
+    border-style: solid;
+    border-color: #53DF00;
+}
+
+.recipe {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #53DF00;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+
+    background-color: #F0F8BA;
+
+    padding: 10px;
+    margin-bottom: 10px;
+
+    font-size: 12px;
+    text-align: left;
+    min-height: 150px; /* Because the thumbs are 100 x 100 px + the title */
+}
+
+.label {
+    font-weight: bold;
+}
+
+.searchresults li {
+    list-style-type: none;
+}
+
+.recipe-thumbnail {
+    width: 100px;
+    height: 100px;
+    float: left;
+}
+
+.recipe-content {
+    margin-top: 12px;
+}
+
+.recipe-text {
+    margin-left: 110px;
+}
+
+.recipe-title {
+    text-align: center;
+    font-size: 24px;
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+.recipe-title a {
+    color: #53DF00;
+}
+
+#searchsearch {
+    width: 575px;
+    height: 25px;
+    border-color: #53DF00;
+    border-style: solid;
+    border-width: 1px;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 18px;
+}
+
+/* --- */
+
+/* PAGING */
+#pager {
+    font-size: 10px;
+}
+
+#pager a {
+    color: black;
+    text-decoration: none;
+}
+
+.pager-item {
+    display: inline;
+    list-style-type: none;
+    margin: 0px 3px 0px 3px;
+    padding: 2px 4px 2px 4px;
+
+    background-color: #D8F800;
+    border-color: #53DF00;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 1px;
+}
+
+.pager-item-current {
+    font-weight: bold;
+    border: none;
+    background: none;
+}
+
+.pager-item-more {
+    border: none;
+    background: none;
+}
+/* --- */
+
+/* ABOUT PAGE */
+#VeelKookplezier {
+    font-size: 18px;
+}
+
+#content {
+    margin-top: 50px;
+}
+
+.about-part {
+    margin: 25px 0px 25px 0px;
+}
+/* --- */
+
+/* TOOLTIP */
+#ToolTip
+{
+    z-index: 100;
+    position: absolute;
+    display: none;
+    width: 225px;
+    height: 125px;
+    font-size: 12px;
+}
+
+#ToolTipMain
+{
+    padding: 10px 5px 5px 10px;
+    text-align: center;
+    vertical-align: middle;
+    background-image: url('../images/tooltip.png');
+    width: 185px;
+    height: 110px;
+    float: left;
+}
+
+#ToolTipArrow
+{
+    background-image: url('../images/tooltip-arrow.png');
+    width: 25px;
+    height: 125px;
+    float: left;
+}
+
+/* --- */
+
+/* Main navigation */
+#mainnav
+{
+}
+
+mainnav_item
+{
+}
+
+/* --- */

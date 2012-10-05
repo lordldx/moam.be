@@ -1,0 +1,14 @@
+{
+        "query" : {
+                  "bool" : {
+                           "should" : {
+                                    "text_phrase" : {"_all" : "100 gr suiker"}
+                                    },
+                           "should" : {
+                                    "text_phrase_prefix" : {"_all" : "wout"}
+                                    }
+                            }                        
+                  },
+        "from" : 0,
+        "size" : 50
+}

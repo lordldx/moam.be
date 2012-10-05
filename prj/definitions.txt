@@ -1,0 +1,25 @@
+Kleuren
+=======
+Primair kleur: #9FEE00
+Secondair kleur 1: #53DF00
+Secondair kleur 2: #D8F800
+
+Database Access:
+ - via DBIx::Class
+
+All classes:
+ - with MooseX::Declare
+
+Testing:
+ - roles via MooseX::Test::Role
+ - classes via Test::Moose
+ - other testing via Test::Class
+ - Mocking via Test::Mock::...
+
+Editing:
+ - via emacs
+ - use Devel::PerlySense
+
+reCAPTCHA:
+ - public key: 6LeWfc0SAAAAAEACrit0LCArLb4QlXL_ot1Q-IZH 
+ - private key: 6LeWfc0SAAAAAC4tnpfcxy3fnSj5sd9k3lJG_34B 

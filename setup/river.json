@@ -1,0 +1,24 @@
+{
+    "type" : "couchdb",
+    "couchdb" : {
+        "host" : "localhost",
+        "port" : 5984,
+        "db" : "foood",
+        "filter" : null
+    },
+    "index" : {
+        "index" : "foood",
+        "type" : "foood",
+        "bulk_size": "100",
+        "bulk_timeout" : "10ms",
+        "analysis" : {
+                   "analyzer" : {
+                              "my_analyzer" : {
+                                            "type" : "snowball",
+                                            "language" : "Dutch"
+                              }
+                   }
+              }
+        }
+    }
+}

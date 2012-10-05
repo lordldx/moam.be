@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>Over Moam.be</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/site.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jquerytools.org/1.2.5/jquery.tools.min.js"></script>
+    <script type="text/javascript" src="js/tooltip.js"></script>
+    <script type="text/javascript" src="js/about.js"></script>
+    <script type="text/javascript">
+      if (typeof jQuery == 'undefined') {
+      var e = document.createElement('script');
+      e.src = '/js/jquery.js';
+      e.type = 'text/javascript';
+      document.getElementsByTagName('head')[0].appendChild(e);
+      } 
+
+      var about = new About();
+      $('document').ready(about.ready);
+    </script>
+  </head>
+  <body>
+    <div id="main">
+      <div id="about-header">
+        <a href="http://www.moam.be">
+          <img src="images/header.png" alt="moambe logo" />
+        </a>
+      </div>
+      <div id="content" class="recipe dropshadow">
+        <h1 class="recipe-title">Over moambe</h1>
+        <div id="about">
+          <p class="text-align-left about-part">
+            Moambe is een website om naar recepten te zoeken.
+            Moambe is echter geen &quot;dertien in een dozijn&quot; receptenwebsite of -community.
+            Moambe gaat namelijk zoeken in <span id="all" class="clickable">alle*</span> andere reeds bestaande receptenwebsites!
+            De bedoeling is dan ook dat moambe uiteindelijk d&eacute; referentie wordt als het op recepten zoeken aankomt.
+          </p>
+          <p class="text-align-right about-part">
+            Daarnaast gaat moambe ook in werkelijk alles zoeken! Heb je bijvoorbeeld nog 150 ml room in je koelkast staan? 
+            Zoek dan gewoon op &quot;50 ml room&quot; en je krijgt alle recepten te zien waar 150 ml room voor nodig is!
+            (<span id="TrySearch" class="clickable">probeer het maar!</span>).
+          </p>
+          <p class="text-align-left about-part">
+            moambe wordt ook dagelijks bijgewerkt. Elke dag opnieuw worden <span id="knownsites" class="clickable">alle gekende receptensites</span>
+            overlopen op zoek naar nieuwe recepten. Er worden ook op regelmatige basis nieuwe receptensites toegevoegd aan de lijst van te doorzoeken sites.
+            Zo blijft het aantal recepten in moambe's databank elke dag groeien! Momenteel bevat onze databank <span id="numRecipesInDb">0</span> recepten.
+          </p>
+          <p class="text-align-right about-part">
+            Mocht er nog een bepaalde receptenwebsite zijn die momenteel niet door moambe doorzocht wordt, maar waarvan jij graag zou willen dat dat wel zo was,
+            stuur ons dan een <a class="clickable" href="mailto:crawler@moam.be?subject=Voorstel om een receptensite te doorzoeken">mailtje</a> en we zullen proberen om de site
+            zo snel mogelijk toe te voegen aan onze lijst van te doorzoeken receptensites!
+          </p>
+          <p id="VeelKookplezier" class="text-align-center">
+            Veel kookplezier!
+          </p>
+        </div>
+      </div>
+    </div>
+    <div id="ToolTip">
+      <div id="ToolTipMain">
+      </div>
+      <div id="ToolTipArrow">
+      </div>
+    </div>
+    <form method="post" action="/search" id="searchform">
+      <input id="mainsearch" type="hidden" name="mainsearch">
+    </form>
+  </body>
+</html>

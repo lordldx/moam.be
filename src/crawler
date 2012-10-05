@@ -1,0 +1,92 @@
+#!c:\strawberry\perl\bin\perl.exe -w
+# -*- mode: cperl -*-
+#
+
+use strict;
+use warnings;
+
+use File::Basename 'dirname';
+use File::Spec;
+
+use Mojo::UserAgent;
+use CouchDB::Client;
+
+use lib join '/', File::Spec->splitdir(dirname(__FILE__)), 'lib';
+use Service::ArticleService;
+use Service::CrawlerService;
+use Repositories::CrawlerRepository;
+use FooodConfig;
+use CrawlerOptions;
+
+# crawlers
+use Crawlers::DOMHelper;
+use Crawlers::ZestaCrawler;
+use Crawlers::NjamCrawler;
+use Crawlers::DummyCrawler;
+
+# constants
+use constant CONFIG_PATH => scalar "cfg/foood.yml";
+
+$| = 1;
+
+# get the config
+my $config = FooodConfig->new(FileLocation => CONFIG_PATH);
+
+# initialize the db
+my $db = CouchDB::Client->new;
+$db->testConnection or die "Failed to connect to CouchDB";
+# initialize the ArticleService
+my $articleService = ArticleService->new(Db => $db->newDB('foood'),
+                                         config => $config);
+# initialize the DOMHelper
+my $domHelper = DOMHelper->new;
+
+# initialize the crawler repository
+my $userAgent = Mojo::UserAgent->new(max_redirects => 10);
+my $httpProxy = $config->Contents->get_http_proxy;
+if (defined $httpProxy) {
+  $userAgent->http_proxy($httpProxy);
+}
+
+# initialize the options
+my $crawlerOptions = CrawlerOptions->new_with_options;
+
+# fill repository
+my $crawlerRepo = CrawlerRepository->new;
+&addCrawlerToRepo(ZestaCrawler->new(UserAgent => $userAgent,
+                                    ArticleService => $articleService,
+                                    DOMHelper => $domHelper));
+&addCrawlerToRepo(NjamCrawler->new(UserAgent => $userAgent,
+                                   ArticleService => $articleService));
+
+if ($crawlerRepo->GetNumberOfCrawlers() == 0) {
+  $crawlerRepo->AddCrawler(DummyCrawler->new(UserAgent => $userAgent,
+                                             ArticleService => $articleService));
+}
+
+# initialize the crawlerService
+my $crawlerService = CrawlerService->new(CrawlerRepository => $crawlerRepo);
+
+# run
+if (defined $crawlerOptions->u) {
+  $crawlerService->CrawlSingle($crawlerOptions->u);
+} elsif (defined $crawlerOptions->n) {
+  $crawlerService->CrawlNew();
+} else {
+  $crawlerService->Crawl(defined $crawlerOptions->p ? $crawlerOptions->p : 0);
+}
+
+sub addCrawlerToRepo {
+  my $crawler = shift;
+
+  if (defined $crawlerOptions->c) {
+    my $crawlerId = $crawlerOptions->c;
+    if (substr($crawler, 0, length $crawlerId) eq $crawlerId) {
+      $crawlerRepo->AddCrawler($crawler);
+    }
+  } else {
+    $crawlerRepo->AddCrawler($crawler);
+  }
+}
+
+__END__

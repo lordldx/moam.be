@@ -1,0 +1,48 @@
+% layout 'default';
+%= javascript 'js/contact/index.js'
+%= stylesheet 'css/contact.css'
+<script type="text/javascript">
+  var index = new Index();
+  $('document').ready(function(){index.ready();});
+</script>
+<div id="header">
+  <a href="http://www.moam.be">
+    <img src="images/header.png" alt="moambe logo" />
+  </a>
+</div>
+<div id="content" class="recipe dropshadow">
+  <h1 class="recipe-title">Contacteer Moam.be</h1>
+  <% if (defined stash('error')) {%>
+  <div id="error">
+    <div id="error-title">Er is een fout opgetreden tijdens het mailen.</div>
+    <div id="error-text">
+      %= stash('error');
+    </div>
+  </div>
+  <% } %>
+  <div id="mailform_container">
+    <%= form_for '/contact' => (method => 'post', id => 'mailform') => begin %>
+    <div class="mailform_item">
+      <div class="mailform_item_label">Jouw e-mail adres:</div>
+      <div class="mailform_item_input"><%= text_field 'from', id => 'mail_from', class => 'dropshadow' %></div>
+    </div>
+    <div class="mailform_item">
+      <div class="mailform_item_label">Onderwerp:</div>
+      <div class="mailform_item_input"><%= text_field 'subject', id => 'mail_subject', class => 'dropshadow' %></div>
+    </div>
+    <div class="mailform_item">
+      <div class="mailform_item_label">&nbsp;</div>
+      <div class="mailform_item_input"><%= text_area 'body', id => 'mail_body', class => 'dropshadow' %></div>
+    </div>
+    <div class="mailform_item">
+      <div class="mailform_item_label">Beveiliging</div>
+      <div>
+        %== reCAPTCHA '6LeWfc0SAAAAAEACrit0LCArLb4QlXL_ot1Q-IZH'
+      </div>
+    </div>
+    <div id="mailform_submit">
+      %= submit_button 'Versturen' => (id => 'submit_button')
+    </div>
+    <% end %>
+  </div>
+</div>

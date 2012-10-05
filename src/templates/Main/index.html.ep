@@ -1,0 +1,21 @@
+% layout 'default';
+<%= javascript 'js/index.js' %>
+<%= javascript 'js/tooltip.js' %>
+<script type="text/javascript">
+  var index = new Index();
+  $('document').ready(function(){index.ready();});
+</script>
+<div id="header">
+  <a href="http://www.moam.be">
+    <img src="images/header.png" alt="moambe logo" />
+  </a>
+</div>
+<div id="content">
+  <%= form_for '/search' => (method => 'post', id => 'searchform') => begin %>
+  <%= text_field 'mainsearch', id => 'mainsearch', class => 'dropshadow searchinput' %>
+  <% end %>
+  <div id="ToolTip">
+    <div id="ToolTipMain"></div>
+    <div id="ToolTipArrow"></div>
+  </div>
+</div>

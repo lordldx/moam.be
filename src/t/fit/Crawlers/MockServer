@@ -1,0 +1,35 @@
+#!/usr/bin/env perl
+use Mojolicious::Lite;
+use File::Slurp;
+
+my $config = {};
+
+helper SetConfig => sub {
+  shift;
+  $config = shift;
+};
+
+get '/*path'  => sub {
+  my $self = shift;
+  my $path = $self->stash('path');
+
+  my @params = $self->param;
+
+  if (scalar @params > 0) {
+    $path .= '?';
+    foreach my $param (@params) {
+      $path .= $param . '=' . $self->param($param) . '&';
+    }
+    # chop off final '&'
+    $path = substr($path, 0, length($path) - 1);
+  }
+
+  if (defined $config->{$path}) {
+    my @data = read_file($config->{$path});
+    $self->render_data("@data");
+  } else {
+    $self->render_text("unrecognized param: $path");
+  }
+};
+
+app->start;

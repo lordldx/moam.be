@@ -1,0 +1,105 @@
+% layout 'default';
+<% if (defined stash('error')) {%>
+<div id="noresults">
+  <div id="noresults-title">Er is een fout opgetreden tijdens het zoeken.</div>
+  <div id="noresults-text">
+    Mogelijks bevat je zoekterm een ongeldig teken.
+  </div>
+</div>
+<% } else { %> <!-- else for if defined error -->
+<% my $result = stash('results'); %>
+<script type="text/javascript" src="js/pager.js"></script>
+<script type="text/javascript">
+  $('document').ready(function () {
+  $('#mainsearch').val("<%= stash('term') %>");
+  var pager = new Pager();
+  pager.draw(<%= stash('currentPage') %>, <%= $result->lastPage %>);
+  });
+</script>
+<div id="header-searchresults"> <!-- start of header -->
+  <div id="header-left">
+    <a id="logo_small" href="http://www.moam.be/"><img src="images/logo_80x80.png" /></a>
+  </div>
+  <div id="header-right">
+    <div id="header-right-form">
+      <%= form_for '/search' => (method => 'post', id => 'searchform') => begin %>
+      <%= text_field 'mainsearch', id => 'searchsearch', class => 'dropshadow searchinput' %>
+      <% end %>
+    </div>
+    <div id="header-right-info">
+      Resultaten 
+      <% my $firstResultId = (stash('currentPage') * stash('pageSize')) + 1; %>
+      <%= $firstResultId %> 
+      tot 
+      <% my $lastResultId = $firstResultId + stash('pageSize') - 1;
+         $lastResultId = $result->totalResults if $result->totalResults < $lastResultId; %>
+        <%= $lastResultId %> 
+        van 
+        <%= $result->totalResults %> 
+        worden getoond. (<%= $result->searchDuration %>s)
+    </div>
+  </div>
+</div> <!-- end of header -->
+<div id="content"> <!-- start of content -->
+  <script type="text/javascript">
+    function getPage(page) {
+    $('#mainsearch').val('<%== stash('term') %>');
+    $('#page').val(page);
+    $('#pagerform').submit();
+    }
+  </script>
+
+  <% my $results = $result->page;
+  if (scalar @$results == 0) { %>
+  <div id="noresults">
+    <div id="noresults-title">Geen enkel recept in onze databank voldoet aan je zoekterm.</div>
+    <div id="noresults-text">
+      Om toch recepten te vinden kan je volgende mogelijkheden proberen
+      <ul>
+        <li>Je zoekterm minder gedetailleerd maken,</li>
+        <li>je zoekterm op fouten controleren,</li>
+        <li>synoniemen van je zoektermen gebruiken,</li>
+        <li>...</li>
+      </ul>
+    </div>
+  </div>
+  <% }
+     else {
+     %>
+  <ul class="searchresults"> <!-- start of resultslist -->
+    <% foreach my $result (@$results) { %>
+    <li class="recipe dropshadow">
+      <div class="recipe-title"><a href="<%= $result->url %>" target="_blank"><%= $result->title %></a></div>
+      <div class="recipe-thumbnail"><img src="<%= $result->thumb_uri %>" alt="Foto van het gerecht" class="dropshadow" /></div>
+      <div class="recipe-text">        
+        <div class="recipe-chef"><span class="label">Chef:</span> <%= $result->chef %></div>
+        <div class="recipe-difficulty"><span class="label">Moeilijkheidsgraad:</span> <%= $result->difficulty %></div>
+        <div class="recipe-kitchentype"><span class="label">Keuken</span>: <%= $result->kitchentype %></div>
+        <div class="recipe-source"><span class="label">Bron:</span> <%= $result->source %></div>
+        <div class="recipe-ingredients"><span class="label">Ingredi&euml;nten:</span>
+          <% 
+             my $ingredientsToDisplay = '';
+             foreach my $ingredient (@{$result->ingredients}) {
+          last if length $ingredientsToDisplay > 100;
+          $ingredientsToDisplay .= $ingredient . ', ';
+          } 
+          $ingredientsToDisplay = substr($ingredientsToDisplay, 0, 100) . '...';
+          %>
+          <%= $ingredientsToDisplay %>
+        </div>
+        <div class="recipe-content"><%= substr($result->contents, 0, 100) . '...' %></div>
+      </div>
+    </li>
+    <% } %>
+  </ul>   <!-- end of resultslist -->
+
+  <ul id="pager"></ul> <!-- the area for the pager; will be filled by pager.js -->
+
+  <%= form_for '/search' => (method => 'post', id => 'pagerform') => begin %>
+  <%= hidden_field 'mainsearch' => '', id => 'mainsearch' %>
+  <%= hidden_field 'page' => '', id => 'page' %>
+  <% end %>
+
+  <% } %> <!-- end of else (from if (scalar $results == 0)) -->
+</div> <!-- end of content -->
+<% } %> <!-- end of else for if defined error -->

@@ -1,0 +1,120 @@
+#!/usr/bin/env perl
+use Mojolicious::Lite;
+use GD::Image;
+use File::Path qw/make_path/;
+
+=head1 Name
+
+FooodCdn - The Content Delivery Network for Foood
+
+=head1 SYNOPSIS
+
+This is a webservice that is the content delivery network (cdn) for the Foood (moam.be) website.
+
+
+=head1 DESCRIPTION
+
+
+=cut
+
+=pod
+
+=head2 GET '/'
+
+retrieves an image from the CDN
+all images returned will be 100x100 px PNG images
+
+=head3 Parameters
+
+=over
+
+=item image: URL-parameter containing the image filename
+
+=back
+
+=head3 Return value
+
+returns the image statically; or no_thumb.png when the image could not be found
+
+=cut
+use Cwd;
+get '/:image' => sub {
+  my $self = shift;
+  my $image = $self->param('image') . ".png";
+
+  if (defined $image) {
+    my $path = 'images/recipes/' . substr($image, 0, 1) . "/$image";
+    return if (-f "public/" . $path && $self->render_static($path));
+  }
+  $self->render_static('images/no_thumb.png');
+};
+
+=pod
+
+=head2 PUT '/:image'
+
+Adds or replaces an image on the CDN
+image will be automatically resized to 100x100 px before being added to the CDN
+if the image already exists on the CDN, then it will be overwritten
+
+=head3 Parameters
+
+=over
+
+=item image: URL-parameter containing the image filename (extension will be changed to '.png')
+
+=item data: The image data is expected in the message body; PNG, JPG, XPM and GD2 formats are allowed.
+
+=back
+
+=head3 Return value
+
+returns a json hash with following members:
+
+=over
+
+=item success -> 1 if successful, 0 if not
+
+=item message -> an errormessage; only present if success == 0
+
+=item image -> the resulting image filename; only present if success == 1
+
+=back
+
+=cut
+
+put '/:image' => sub {
+  my $self = shift;
+  my $image = $self->param('image');
+
+  # all thumbs will be png
+  $image =~ s/(.*)\.*?$/$1/;
+  $image .= '.png';
+
+  my $gd = GD::Image->new($self->req->body);
+  if (defined $gd) {
+    my $thumb = GD::Image->new(100, 100);
+    $thumb->copyResampled($gd, 0, 0, 0, 0, 100, 100, $gd->width, $gd->height);
+    my $pngdata = $thumb->png(0); # compression level 0
+
+    my $destDir = './public/images/recipes/' . substr($image, 0, 1) . '/';
+    make_path($destDir);
+    my $destPath = $destDir . "$image";
+
+    if (open F, ">$destPath") {
+      binmode(F);
+      print F $pngdata;
+      close F;
+      $self->render_json({success => 1,
+                          image => $image});
+    } else {
+      $self->render_json({success => 0,
+                          message => "failed to write thumbnail ($destPath)"});
+    }
+  } else {
+    $self->render_json({success => 0,
+                        message => 'failed to create GD::Image from message body'});
+  }
+};
+
+app->start;
